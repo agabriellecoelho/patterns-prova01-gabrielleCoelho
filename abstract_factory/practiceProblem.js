@@ -23,8 +23,71 @@ class DocxInvoice {
   }
 }
 
+// Abstract Factory
+class ReportFactory {
+  createReport() {
+    throw new Error("Método abstrato deve ser implementado");
+  }
+  createInvoice() {
+    throw new Error("Método abstrato deve ser implementado");
+  }
+}
+
+// Concrete Factories
+class PdfFactory extends ReportFactory {
+  createReport() {
+    return new PdfReport();
+  }
+  createInvoice() {
+    return new PdfInvoice();
+  }
+}
+
+class DocxFactory extends ReportFactory {
+  createReport() {
+    return new DocxReport();
+  }
+  createInvoice() {
+    return new DocxInvoice();
+  }
+}
+
+const factories = {
+  pdf: new PdfFactory(),
+  docx: new DocxFactory()
+}
+
+class ReportApp {
+  constructor(factory) {
+    this.report = factory.createReport();
+    this.invoice = factory.createInvoice();
+  }
+
+  startReport() {
+    console.log(this.report.generate());
+    console.log(this.invoice.generate());
+  }
+}
+
+//Uso
+function main() {
+  const types = ["pdf", "docx"];
+
+  types.forEach((type) => {
+    console.log(`\n>> Formato selecionado: ${type} <<`);
+    const factory = factories[type];
+    if (!factory) throw new Error("Tipo de formato desconhecido");
+
+    const app = new ReportApp(factory);
+    app.startReport();
+  });
+}
+
+main();
+
+
 // Cliente
-function main(format) {
+/*function main(format) {
   let report, invoice;
 
   if (format === "pdf") {
@@ -42,4 +105,4 @@ function main(format) {
 }
 
 main("pdf");
-main("docx");
+main("docx");*/
