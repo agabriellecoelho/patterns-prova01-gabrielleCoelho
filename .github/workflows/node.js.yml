@@ -20,7 +20,7 @@ jobs:
         node-version: 22
         cache: 'npm'    
     - run: npm install      
-    - run: npm run problemBuilder
+    - run: npm run start01
 
   build02:
     name: Run Node.js 02
@@ -33,4 +33,4 @@ jobs:
         node-version: 22
         cache: 'npm'    
     - run: npm install      
-    - run: npm run problemSingleton
+    - run: npm run start02
